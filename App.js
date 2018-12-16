@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from "react-native";
 
 export default class App extends React.Component {
   state = { placeName: "", placeNames: [] };
@@ -8,6 +8,12 @@ export default class App extends React.Component {
     placeNames.push(this.state.placeName);
     this.setState({ placeNames: placeNames });
   };
+  deleteThisRow = (index) => {
+    var arrNew = this.state.placeNames.slice();
+    arrNew.splice(index, 1);
+    this.setState({placeNames: arrNew});
+  }
+
   render() {
     return (
       <View>
@@ -33,7 +39,8 @@ export default class App extends React.Component {
             { paddingLeft: "5%" }
           ]}
         >
-        {this.state.placeNames.map(placeName => <Text>{placeName}</Text>)}
+        {this.state.placeNames.map((items, index) =>
+        (<TouchableOpacity onPress={this.deleteThisRow.bind(this, index)}><Text>{items}</Text></TouchableOpacity> ))}
         </View>
       </View>
     );
